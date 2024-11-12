@@ -40,6 +40,8 @@ images.forEach(image => {
 
         // Add mousemove and mouseup event listeners
         function mouseMove(e) {
+
+
             // Calculate new position
             newX = startX - e.clientX;
             newY = startY - e.clientY;
@@ -70,3 +72,5 @@ images.forEach(image => {
 
 
 window.addEventListener('load', loadPositions);
+
+
