@@ -1,42 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Welcome Home.</title>
-    <link href="styles.css" rel="stylesheet" />
-  </head>
 
-  <body>
-    <div class="container">
-      <img
-        src="img/charlie.png"
-        id="charlie"
-        class="draggable"
-        style="top: 0px; left: 0px"
-      />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Welcome Home.</title>
+  <link href="styles.css" rel="stylesheet" />
+</head>
 
-      <img
-        src="img/paper.png"
-        id="paper"
-        class="draggable"
-        style="top: 300px; left: 0px"
-      />
+<body>
 
-      <img
-        src="img/egg.png"
-        id="egg"
-        class="draggable"
-        style="top: 300px; left: 250px"
-      />
+  <div class="dark-overlay" id="overlay"></div>
 
-      <img
-        src="img/brush.png"
-        id="brush"
-        class="draggable"
-        style="top: 300px; left: 310px"
-      />
+  <div class="container">
+
+    <img src="img/sign.png" id="sign" class="draggable" style="top: 10px; left: 910px" />
+
+    <div id="gitarra" class='draggable' style="top: 20px; left: 530px">
+      <img src="img/gitarra.png" id="gitarra" />
+      <div class="string" id="string1"
+        style="top: 91px; left: 89px; width: 3px; height: 420px;  transform: rotate(1deg);"></div>
+      <div class="string" id="string1"
+        style="top: 77px; left: 95px; width: 2.7px; height: 438px;  transform: rotate(0.9deg);"></div>
+      <div class="string" id="string1"
+        style="top: 64px; left: 100px; width: 2.3px; height: 445px;  transform: rotate(0.7deg);"></div>
+      <div class="string" id="string1"
+        style="top: 51px; left: 105px; width: 2px; height: 460px;  transform: rotate(0.2deg);"></div>
+      <div class="string" id="string1"
+        style="top: 40px; left: 110px; width: 1.8px; height: 480px;  transform: rotate(0deg);"></div>
+      <div class="string" id="string1"
+        style="top: 25px; left: 115px; width: 1.5px; height: 490px;  transform: rotate(-0.3deg);"></div>
     </div>
-  </body>
-  <script src="drag.js"></script>
+
+
+
+
+    <img src="img/charlie.png" id="charlie" class="draggable" style="top: 20px; left: 0px" />
+    <img src="img/paper.png" id="paper" class="draggable" style="top: 320px; left: 0px" />
+
+    <img src="img/brush.png" id="brush" class="draggable" style="top: 275px; left: 310px" />
+    <img src="img/ruler.png" id="ruler" class="draggable" style="top: 20px; left: 350px" />
+    <img src="img/cuaderno.png" id="cuaderno" class="draggable" style="top: 80px; left: 350px" />
+    <img src="img/libro.png" id="libro" class="draggable" style="top: 350px; left: 350px" />
+    <img src="img/gata.png" id="gata" class="draggable" style="top: 540px; left: 320px" />
+    <img src="img/schere.png" id="schere" class="draggable" style="top: 430px; left: 475px" />
+
+    <img src="img/bowtie-1.png" id="bowtie-1" class="draggable bowtie" style="top: 360px; left: 483px" />
+    <img src="img/bowtie-2.png" id="bowtie-2" class="draggable bowtie" style="top: 360px; left: 483px" />
+    <img src="img/bowtie-3.png" id="bowtie-3" class="draggable bowtie" style="top: 360px; left: 483px" />
+    <img src="img/bowtie-4.png" id="bowtie-4" class="draggable bowtie" style="top: 360px; left: 483px" />
+    <img src="img/bowtie-5.png" id="bowtie-5" class="draggable bowtie" style="top: 360px; left: 483px" />
+    <img src="img/bowtie-6.png" id="bowtie-6" class="draggable bowtie" style="top: 360px; left: 483px" />
+
+    <img src="img/sticky-pink.png" id="sticky-pink" class="draggable" style="top: 135px; left: 548px" />
+    <img src="img/sticky-yellow.png" id="sticky-yellow" class="draggable" style="top: 210px; left: 548px" />
+    <img src="img/goma.png" id="goma" class="draggable" style="top: 288px; left: 548px" />
+    <img src="img/newsletter.png" id="newsletter" class="draggable" style="top: 20px; left: 700px" />
+
+
+    <img src="img/lampara.png" id="lampara" onclick="lights();" class="draggable" style="top: 250px; left: 690px" />
+
+    <img src="img/pick.png" id="pick" class="draggable" style="top: 340px; left: 667px" />
+
+    <a href="https://github.com/LiteralHat" target="_blank">
+      <img src="img/window.png" id="window" class="draggable" style="top: 445px; left: 760px" /></a>
+
+    <img src="img/lapiz.png" id="lapiz" class="draggable" style="top: 585px; left: 760px" />
+    <img src="img/cuchara.png" id="cuchara" class="draggable" style="top: 615px; left: 730px" />
+    <img src="img/mapa.png" id="mapa" class="draggable" style="top: 660px; left: 720px" />
+    <img src="img/paint.png" id="paint" class="draggable" style="top: 690px; left: 560px" />
+    <img src="img/rato.png" id="rato" class="draggable" style="top: 630px; left: 530px" />
+
+    <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank"><img src="img/egg.png" id="egg"
+        target="_blank" class="draggable" style="top: 325px; left: 250px" /></a>
+
+
+
+  </div>
+</body>
+<script src="drag.js"></script>
+<script src="gimmick.js"></script>
+
 </html>

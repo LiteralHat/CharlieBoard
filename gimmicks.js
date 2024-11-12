@@ -21,48 +21,26 @@ function savePosition(image) {
 }
 
 
-
-
-
 images.forEach(image => {
     image.addEventListener('mousedown', mouseDown);
-    image.addEventListener('mouseover', mouseOver);
-
-    function mouseOver(e) {
-        image.style.transform = 'scale(1.02)';
-        image.addEventListener('mouseout', mouseOut);
-        image.style.cursor = 'pointer';
-    }
-
-    function mouseOut(e) {
-        image.style.transform = 'scale(1)';
-        image.removeEventListener('mouseout', mouseOut);
-    }
 
 
     function mouseDown(e) {
-        image.removeEventListener('mouseover', mouseOver);
-
-
         e.preventDefault();
         // Declare initial position of the mouse
 
+        let offset = -10;
         let startX = e.clientX;
         let startY = e.clientY;
         let newX = 0;
         let newY = 0;
+        image.style.filter = 'drop-shadow(10px 10px 7px rgba(3, 1, 23, 0.531))';
+        image.style.transform = 'scale(1.05)';
 
-        image.style.filter = 'drop-shadow(2px 2px 4px rgba(3, 1, 23, 0.831))';
-        image.style.transform = 'scale(1.03)';
-
-
-        let bowtieRotation = Math.floor(Math.random() * 80) - 40;
-        if (e.target.id.includes('bowtie')) {
-            image.style.transform = 'rotate(' + bowtieRotation + 'deg)';
-        }
 
         // Add mousemove and mouseup event listeners
         function mouseMove(e) {
+
 
             // Calculate new position
             newX = startX - e.clientX;
@@ -72,32 +50,18 @@ images.forEach(image => {
             startX = e.clientX;
             startY = e.clientY;
 
-            image.style.filter = 'drop-shadow(10px 10px 7px rgba(3, 1, 23, 0.531))';
-            image.style.transform = 'scale(1.05)';
             // Move the image
             image.style.top = (image.offsetTop - newY) + 'px';
             image.style.left = (image.offsetLeft - newX) + 'px';
         }
 
         function mouseUp() {
-
-            if (newX == 0 && newY == 0) {
-                console.log('yup');
-            }
-
             // Remove event listeners when mouse is released
             image.style.filter = 'drop-shadow(0px 0px 3px rgba(3, 1, 23, 0.831))';
             image.style.transform = 'scale(1)';
-            if (e.target.id.includes('bowtie')) {
-                image.style.transform = 'rotate(' + bowtieRotation + 'deg)';
-            }
-
             document.removeEventListener('mousemove', mouseMove);
             document.removeEventListener('mouseup', mouseUp);
-            image.removeEventListener('mouseout', mouseOut);
-            image.addEventListener('mouseover', mouseOver);
             savePosition(image);
-
         }
 
         // Add event listeners for mousemove and mouseup
@@ -107,21 +71,6 @@ images.forEach(image => {
 });
 
 
-
-let isDarkMode = 0; // 0 for light mode, 1 for dark mode
-
-
-function lights() {
-    const overlay = document.getElementById('overlay');
-    const bg = document.body;
-
-    if (isDarkMode === 0) {
-        overlay.style.opacity = 1;
-        isDarkMode = 1;
-    } else {
-        overlay.style.opacity = 0;
-        isDarkMode = 0;
-    }
-}
-
 window.addEventListener('load', loadPositions);
+
+
