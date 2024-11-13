@@ -36,9 +36,13 @@ images.forEach(image => {
 
     // for simply hovering it will brighten the image
     function mouseOver(e) {
-        image.style.filter = 'drop-shadow(0px 0px 2px rgba(3, 1, 23, 0.831)) brightness(110%) ';
-        image.addEventListener('mouseout', mouseOut);
-        image.style.cursor = 'pointer';
+        if (!paintMode) {
+            image.style.filter = 'drop-shadow(0px 0px 2px rgba(3, 1, 23, 0.831)) brightness(110%) ';
+            image.addEventListener('mouseout', mouseOut);
+            image.style.cursor = 'pointer';
+        } else {
+            image.style.pointerEvents = 'none';
+        }
     }
 
     // when user stops hovering
@@ -156,14 +160,10 @@ function paint() {
         const canvas = document.getElementById('canvas');
         const ctx = canvas.getContext("2d");
 
-        document.addEventListener('mousemove', function (e) {
-            paintBrush.style.left = e.pageX + 'px';
-            paintBrush.style.top = e.pageY + 'px';
-        });
+
 
         //variable foractively painting
         let painting = false;
-
 
         function startPosition(e) {
             painting = true;
@@ -177,9 +177,13 @@ function paint() {
 
         function draw(e) {
             if (!painting) return;
-            ctx.lineWidth = 5;
+            ctx.lineWidth = 8;
             ctx.lineCap = "round";
-            ctx.strokeStyle = "black";
+            ctx.lineJoin = "round";
+            ctx.strokeStyle = "#782434";
+            ctx.shadowColor = "#782434";
+            ctx.shadowBlur = 4;
+
 
             ctx.lineTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
             ctx.stroke();
@@ -190,6 +194,8 @@ function paint() {
         canvas.addEventListener("mousedown", startPosition);
         canvas.addEventListener("mouseup", endPosition);
         canvas.addEventListener("mousemove", draw);
+
+
 
     } else {
 
