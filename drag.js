@@ -34,112 +34,110 @@ const artTools = ['brush', 'paint', 'lapiz', 'goma'];
 images.forEach(image => {
     image.addEventListener('mousedown', mouseDown);
     image.addEventListener('mouseover', mouseOver);
-
-    // for simply hovering it will brighten the image
-    function mouseOver(e) {
-        if (paintMode) {
-            if (artTools.includes(image.id)) {
-
-                image.style.filter = 'drop-shadow(0px 0px 2px rgba(3, 1, 23, 0.831)) brightness(110%) ';
-                image.addEventListener('mouseout', mouseOut);
-                image.style.cursor = 'pointer';
-            } else {
-                image.style.pointerEvents = 'none';
-            }
-        } else {
-            image.style.filter = 'drop-shadow(0px 0px 2px rgba(3, 1, 23, 0.831)) brightness(110%) ';
-            image.addEventListener('mouseout', mouseOut);
-            image.style.cursor = 'pointer';
-        }
-    }
-
-    // when user stops hovering
-    function mouseOut(e) {
-        image.style.filter = 'drop-shadow(0px 0px 3px rgba(3, 1, 23, 0.831))';
-        image.removeEventListener('mouseout', mouseOut);
-    }
-
-    //when mouseclick is detected
-    function mouseDown(e) {
-        if (!paintMode) {
-
-            soundPickUp.play();
-            // move image to top
-            image.style.zIndex = zIndex++;
-
-            // Start dragging
-            isDragging = false;
-
-            //transformation stuff
-            e.preventDefault();
-            let startX = e.clientX;
-            let startY = e.clientY;
-            let newX = 0;
-            let newY = 0;
-
-            //cosmetic
-            image.style.filter = 'drop-shadow(2px 2px 4px rgba(3, 1, 23, 0.831)) brightness(110%)';
-            image.style.transform = 'scale(1.03)';
-            soundDrop.volume = 0.02;
-
-            // if user actually moves the mouse
-            function mouseMove(e) {
-                soundDrop.volume = 0.1;
-                e.preventDefault();
-                // Calculate new position
-                newX = startX - e.clientX;
-                newY = startY - e.clientY;
-
-                // Update starting position
-                startX = e.clientX;
-                startY = e.clientY;
-
-                //cosmetic
-                image.style.filter = 'drop-shadow(10px 10px 7px rgba(3, 1, 23, 0.531)) brightness(110%)';
-                image.style.transform = 'scale(1.05)';
-
-                // Move the image
-                image.style.top = (image.offsetTop - newY) + 'px';
-                image.style.left = (image.offsetLeft - newX) + 'px';
-
-                isDragging = true;
-            }
-
-            function mouseUp(e) {
-                soundDrop.play();
-
-                //cosmetic effects
-                image.style.filter = 'drop-shadow(0px 0px 3px rgba(3, 1, 23, 0.831)) brightness(110%)';
-                image.style.transform = 'scale(1)';
-
-                //if its a bowtie it will randomly rotate it a certain amount when its dropped
-                if (e.target.id.includes('bowtie')) {
-                    let bowtieRotation = Math.floor(Math.random() * 80) - 40;
-                    image.style.transform = 'rotate(' + bowtieRotation + 'deg)';
-                }
-
-
-                // Remove event listeners when mouse is released
-                document.removeEventListener('mousemove', mouseMove);
-                document.removeEventListener('mouseup', mouseUp);
-                image.addEventListener('mouseover', mouseOver);
-                savePosition(image);
-            }
-
-            // Add event listeners for mousemove and mouseup
-            document.addEventListener('mousemove', mouseMove);
-            document.addEventListener('mouseup', mouseUp);
-        }
-    }
-
-    //prevents link from opening if the user has dragged the thing
-    image.addEventListener('click', function (e) {
-        if (isDragging) {
-            e.preventDefault(); // Prevent the link from being activated
-        }
-    });
 });
+// for simply hovering it will brighten the image
+function mouseOver(e) {
+    if (paintMode) {
+        if (artTools.includes(this.id)) {
 
+            this.style.filter = 'drop-shadow(0px 0px 2px rgba(3, 1, 23, 0.831)) brightness(110%) ';
+            this.addEventListener('mouseout', mouseOut);
+            this.style.cursor = 'pointer';
+        } else {
+            this.style.pointerEvents = 'none';
+        }
+    } else {
+        this.style.filter = 'drop-shadow(0px 0px 2px rgba(3, 1, 23, 0.831)) brightness(110%) ';
+        this.addEventListener('mouseout', mouseOut);
+        this.style.cursor = 'pointer';
+    }
+}
+
+// when user stops hovering
+function mouseOut(e) {
+    this.style.filter = 'drop-shadow(0px 0px 3px rgba(3, 1, 23, 0.831))';
+    this.removeEventListener('mouseout', mouseOut);
+}
+
+//when mouseclick is detected
+function mouseDown(e) {
+
+    soundPickUp.play();
+    // move image to top
+    this.style.zIndex = zIndex++;
+
+    // Start dragging
+    isDragging = false;
+
+    //transformation stuff
+    e.preventDefault();
+    let startX = e.clientX;
+    let startY = e.clientY;
+    let newX = 0;
+    let newY = 0;
+
+    //cosmetic
+    this.style.filter = 'drop-shadow(2px 2px 4px rgba(3, 1, 23, 0.831)) brightness(110%)';
+    this.style.transform = 'scale(1.03)';
+    soundDrop.volume = 0.02;
+
+    // if user actually moves the mouse
+    const mouseMove = (e) => {
+
+        soundDrop.volume = 0.1;
+        e.preventDefault();
+        // Calculate new position
+        newX = startX - e.clientX;
+        newY = startY - e.clientY;
+
+        // Update starting position
+        startX = e.clientX;
+        startY = e.clientY;
+
+        //cosmetic
+        this.style.filter = 'drop-shadow(10px 10px 7px rgba(3, 1, 23, 0.531)) brightness(110%)';
+        this.style.transform = 'scale(1.05)';
+
+        // Move the this
+        this.style.top = (this.offsetTop - newY) + 'px';
+        this.style.left = (this.offsetLeft - newX) + 'px';
+
+        isDragging = true;
+    }
+
+    const mouseUp = (e) => {
+        soundDrop.play();
+
+        //cosmetic effects
+        this.style.filter = 'drop-shadow(0px 0px 3px rgba(3, 1, 23, 0.831)) brightness(110%)';
+        this.style.transform = 'scale(1)';
+
+        //if its a bowtie it will randomly rotate it a certain amount when its dropped
+        if (e.target.id.includes('bowtie')) {
+            let bowtieRotation = Math.floor(Math.random() * 80) - 40;
+            this.style.transform = 'rotate(' + bowtieRotation + 'deg)';
+        }
+
+
+        // Remove event listeners when mouse is released
+        document.removeEventListener('mousemove', mouseMove);
+        document.removeEventListener('mouseup', mouseUp);
+        this.addEventListener('mouseover', mouseOver);
+        savePosition(this);
+    }
+
+    // Add event listeners for mousemove and mouseup
+    document.addEventListener('mousemove', mouseMove);
+    document.addEventListener('mouseup', mouseUp);
+
+}
+
+//prevents link from opening if the user has dragged the thing
+this.addEventListener('click', function (e) {
+    if (isDragging) {
+        e.preventDefault(); // Prevent the link from being activated
+    }
+});
 
 //adds post it notes at random
 
