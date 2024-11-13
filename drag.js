@@ -28,11 +28,12 @@ function savePosition(image) {
 // just important variables
 let zIndex = 2;
 let isDarkMode = 0;
-const artTools = ['brush', 'paint', 'lapiz', 'goma'];
+const artTools = ['brush', 'bucket', 'lapiz', 'goma'];
 
 function enableInteract() {
     images.forEach(image => {
         image.style.pointerEvents = 'auto';
+        image.style.filter = 'drop-shadow(0px 0px 2px rgba(3, 1, 23, 0.831))';
         image.addEventListener('mousedown', mouseDown);
         image.addEventListener('mouseover', mouseOver);
 
@@ -41,24 +42,38 @@ function enableInteract() {
 
 function disableInteract() {
     images.forEach(image => {
-        if (!artTools.includes(image.id)) {
-            image.style.pointerEvents = 'none';
-            image.removeEventListener('mouseout', mouseOut);
-            image.removeEventListener('mousedown', mouseDown);
-            image.removeEventListener('mouseover', mouseOver);
-        }
+        image.style.pointerEvents = 'none';
+
+        image.removeEventListener('mouseout', mouseOut);
+        image.removeEventListener('mousedown', mouseDown);
+        image.removeEventListener('mouseover', mouseOver);
     });
+    if (paintMode) {
+        images.forEach(image => {
+            if (artTools.includes(image.id)) {
+                image.style.pointerEvents = 'auto';
+                image.style.cursor = 'pointer';
+                image.style.filter = 'drop-shadow(0px 0px 6px rgba(255, 189, 197, 1))';
+                image.addEventListener('mousedown', paintMouseDown);
+                console.log('test');
+            }
+        });
+    } else {
+
+    }
+}
+
+function paintMouseDown(e) {
+    image.style.filter = 'drop-shadow(0px 0px 6px rgba(255, 189, 197, 1))';
+    this.style.cursor = 'pointer';
 }
 
 // for simply hovering it will brighten the image
 function mouseOver(e) {
-
-
     this.style.filter = 'drop-shadow(0px 0px 2px rgba(3, 1, 23, 0.831)) brightness(110%) ';
     this.addEventListener('mouseout', mouseOut);
     this.style.cursor = 'pointer';
     this.style.pointerEvents = 'auto';
-
 }
 
 // when user stops hovering
@@ -191,13 +206,15 @@ function lights() {
     }
 }
 
-
 let painting = false;
 let paintMode = false;
 
 function paint(toolname) {
     let canvas = document.getElementById('canvas');
     let ctx = canvas.getContext("2d");
+    let tool = document.getElementById(toolname);
+    console.log(tool);
+    tool.style.filter = 'drop-shadow(0px 0px 6px rgba(255, 189, 197, 1))';
 
     function startPosition(e) {
         if (paintMode) {
@@ -213,12 +230,25 @@ function paint(toolname) {
 
     function draw(e) {
         if (!painting) return;
-        ctx.lineWidth = 8;
-        ctx.lineCap = "round";
-        ctx.lineJoin = "round";
-        ctx.strokeStyle = "#782434";
-        ctx.shadowColor = "#782434";
-        ctx.shadowBlur = 4;
+
+        switch (toolname) {
+            case 'brush':
+                ctx.lineWidth = 8;
+                ctx.lineCap = "round";
+                ctx.lineJoin = "round";
+                ctx.strokeStyle = "#782434";
+                ctx.shadowColor = "#782434";
+                ctx.shadowBlur = 4;
+                break;
+            case 'lapiz':
+                ctx.lineWidth = 3;
+                ctx.lineCap = "round";
+                ctx.lineJoin = "round";
+                ctx.strokeStyle = "#090814";
+                ctx.shadowColor = "#090814";
+                ctx.shadowBlur = 4;
+                break;
+        }
 
         ctx.lineTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
         ctx.stroke();
@@ -239,9 +269,6 @@ function paint(toolname) {
     } else {
         paintMode = false;
         enableInteract();
-
-        painting = false;
-
         console.log('paintmode off');
 
         canvas.removeEventListener("mousedown", startPosition);
