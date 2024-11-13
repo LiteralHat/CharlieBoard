@@ -29,6 +29,7 @@ function savePosition(image) {
 let zIndex = 2;
 let isDarkMode = 0;
 let paintMode = false;
+const artTools = ['brush', 'paint', 'lapiz', 'goma'];
 
 images.forEach(image => {
     image.addEventListener('mousedown', mouseDown);
@@ -36,12 +37,19 @@ images.forEach(image => {
 
     // for simply hovering it will brighten the image
     function mouseOver(e) {
-        if (!paintMode) {
+        if (paintMode) {
+            if (artTools.includes(image.id)) {
+
+                image.style.filter = 'drop-shadow(0px 0px 2px rgba(3, 1, 23, 0.831)) brightness(110%) ';
+                image.addEventListener('mouseout', mouseOut);
+                image.style.cursor = 'pointer';
+            } else {
+                image.style.pointerEvents = 'none';
+            }
+        } else {
             image.style.filter = 'drop-shadow(0px 0px 2px rgba(3, 1, 23, 0.831)) brightness(110%) ';
             image.addEventListener('mouseout', mouseOut);
             image.style.cursor = 'pointer';
-        } else {
-            image.style.pointerEvents = 'none';
         }
     }
 
@@ -133,6 +141,31 @@ images.forEach(image => {
 });
 
 
+//adds post it notes at random
+
+function sticky(color) {
+    if (!isDragging) {
+        let sticky = document.getElementById(color);
+        let container = document.getElementById('container');
+        var imgTop = sticky.style.top;
+        var imgLeft = sticky.style.left;
+        var newDiv = document.createElement('div');
+
+        newDiv.classList.add('draggable');
+
+        newDiv.style.height = '1000px';
+        newDiv.style.width = '1000px';
+        newDiv.style.backgroundColor = '#000000';
+        newDiv.style.position = 'absolute';
+        newDiv.style.top = imgTop;
+        newDiv.style.left = imgLeft;
+
+
+        container.appendChild(newDiv);
+    }
+}
+
+
 //changes the overlay div to be visible, it's already there but you can't see it. essentially when lamp is clicked it will change the opacity
 function lights() {
     if (!isDragging) {
@@ -152,15 +185,17 @@ function lights() {
 }
 
 // paintbrush
-function paint() {
-    if (!isDragging) {
+function paint(tool) {
+    const canvas = document.getElementById('canvas');
+    if (!isDragging && paintMode == false) {
         paintMode = true;
 
+        //the type of mode we're in!
+        let paintTool = tool;
+        console.log('paintmode true')
         const paintBrush = document.getElementById('brush');
-        const canvas = document.getElementById('canvas');
+
         const ctx = canvas.getContext("2d");
-
-
 
         //variable foractively painting
         let painting = false;
@@ -195,9 +230,14 @@ function paint() {
         canvas.addEventListener("mouseup", endPosition);
         canvas.addEventListener("mousemove", draw);
 
-
-
     } else {
+        canvas.removeEventListener("mousedown", startPosition);
+        canvas.removeEventListener("mouseup", endPosition);
+        canvas.removeEventListener("mousemove", draw);
+
+
+        console.log('paintmode false')
+        paintMode = false;
 
     }
 }

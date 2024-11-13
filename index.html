@@ -16,7 +16,7 @@
   <canvas id="canvas" height="3000px" width="3000px"></canvas>
   <div class="dark-overlay" id="overlay"></div>
 
-  <div class="container">
+  <div class="container" id="container">
     <img src="img/sign.png" id="sign" class="draggable"
       style="top: 10px; left: 910px; clip-path: polygon(16% 17%, 17% 100%, 0 100%, 1% 0%, 100% 0, 100% 17%);" />
 
@@ -44,7 +44,7 @@
       style="top: 20px; left: 0px; clip-path: polygon(36% 100%, 45% 74%, 54% 72%, 55% 100%, 88% 99%, 100% 86%, 89% 69%, 100% 59%, 65% 39%, 100% 37%, 100% 0, 0 0, 0 30%, 30% 38%, 0 56%, 5% 68%, 34% 61%, 4% 76%, 7% 95%);" />
     <img src="img/paper.png" id="paper" class="draggable" style="top: 320px; left: 0px" />
 
-    <img src="img/brush.png" id="brush" onclick="paint();" class="draggable" style="top: 275px; left: 310px" />
+    <img src="img/brush.png" id="brush" onclick="paint('brush');" class="draggable" style="top: 275px; left: 310px" />
     <img src="img/ruler.png" id="ruler" class="draggable" style="top: 20px; left: 350px" />
     <img src="img/cuaderno.png" id="cuaderno" class="draggable" style="top: 80px; left: 350px" />
     <img src="img/libro.png" id="libro" class="draggable" style="top: 350px; left: 350px" />
@@ -58,8 +58,10 @@
     <img src="img/bowtie-5.png" id="bowtie-5" class="draggable bowtie" style="top: 360px; left: 483px" />
     <img src="img/bowtie-6.png" id="bowtie-6" class="draggable bowtie" style="top: 360px; left: 483px" />
 
-    <img src="img/sticky-pink.png" id="sticky-pink" class="draggable" style="top: 135px; left: 548px" />
-    <img src="img/sticky-yellow.png" id="sticky-yellow" class="draggable" style="top: 210px; left: 548px" />
+    <img src="img/sticky-pink.png" id="sticky-pink" onclick="sticky('sticky-pink')" class="draggable"
+      style="top: 135px; left: 548px" />
+    <img src="img/sticky-yellow.png" id="sticky-yellow" onclick="sticky('sticky-yellow')" class="draggable"
+      style="top: 210px; left: 548px" />
     <img src="img/goma.png" id="goma" class="draggable" style="top: 288px; left: 548px" />
     <img src="img/newsletter.png" id="newsletter" class="draggable" style="top: 20px; left: 700px" />
 
