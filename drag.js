@@ -28,29 +28,37 @@ function savePosition(image) {
 // just important variables
 let zIndex = 2;
 let isDarkMode = 0;
-let paintMode = false;
 const artTools = ['brush', 'paint', 'lapiz', 'goma'];
 
-images.forEach(image => {
-    image.addEventListener('mousedown', mouseDown);
-    image.addEventListener('mouseover', mouseOver);
-});
+function enableInteract() {
+    images.forEach(image => {
+        image.style.pointerEvents = 'auto';
+        image.addEventListener('mousedown', mouseDown);
+        image.addEventListener('mouseover', mouseOver);
+
+    });
+}
+
+function disableInteract() {
+    images.forEach(image => {
+        if (!artTools.includes(image.id)) {
+            image.style.pointerEvents = 'none';
+            image.removeEventListener('mouseout', mouseOut);
+            image.removeEventListener('mousedown', mouseDown);
+            image.removeEventListener('mouseover', mouseOver);
+        }
+    });
+}
+
 // for simply hovering it will brighten the image
 function mouseOver(e) {
-    if (paintMode) {
-        if (artTools.includes(this.id)) {
 
-            this.style.filter = 'drop-shadow(0px 0px 2px rgba(3, 1, 23, 0.831)) brightness(110%) ';
-            this.addEventListener('mouseout', mouseOut);
-            this.style.cursor = 'pointer';
-        } else {
-            this.style.pointerEvents = 'none';
-        }
-    } else {
-        this.style.filter = 'drop-shadow(0px 0px 2px rgba(3, 1, 23, 0.831)) brightness(110%) ';
-        this.addEventListener('mouseout', mouseOut);
-        this.style.cursor = 'pointer';
-    }
+
+    this.style.filter = 'drop-shadow(0px 0px 2px rgba(3, 1, 23, 0.831)) brightness(110%) ';
+    this.addEventListener('mouseout', mouseOut);
+    this.style.cursor = 'pointer';
+    this.style.pointerEvents = 'auto';
+
 }
 
 // when user stops hovering
@@ -139,8 +147,7 @@ this.addEventListener('click', function (e) {
     }
 });
 
-//adds post it notes at random
-
+//adds sticky note
 function sticky(color) {
     if (!isDragging) {
         let sticky = document.getElementById(color);
@@ -148,18 +155,20 @@ function sticky(color) {
         var imgTop = sticky.style.top;
         var imgLeft = sticky.style.left;
         var newDiv = document.createElement('div');
+        newDiv.innerHTML = '<img src="img/' + color + '-one.png"/>'
+
 
         newDiv.classList.add('draggable');
+        newDiv.addEventListener('mousedown', mouseDown);
+        newDiv.addEventListener('mouseover', mouseOver);
 
-        newDiv.style.height = '1000px';
-        newDiv.style.width = '1000px';
-        newDiv.style.backgroundColor = '#000000';
         newDiv.style.position = 'absolute';
+        newDiv.style.zIndex = sticky.style.zIndex + 2;
         newDiv.style.top = imgTop;
         newDiv.style.left = imgLeft;
 
-
         container.appendChild(newDiv);
+
     }
 }
 
@@ -182,65 +191,66 @@ function lights() {
     }
 }
 
-// paintbrush
-function paint(tool) {
-    const canvas = document.getElementById('canvas');
-    if (!isDragging && paintMode == false) {
-        paintMode = true;
 
-        //the type of mode we're in!
-        let paintTool = tool;
-        console.log('paintmode true')
-        const paintBrush = document.getElementById('brush');
+let painting = false;
+let paintMode = false;
 
-        const ctx = canvas.getContext("2d");
+function paint(toolname) {
+    let canvas = document.getElementById('canvas');
+    let ctx = canvas.getContext("2d");
 
-        //variable foractively painting
-        let painting = false;
-
-        function startPosition(e) {
+    function startPosition(e) {
+        if (paintMode) {
             painting = true;
             draw(e);
         }
+    }
 
-        function endPosition() {
-            painting = false;
-            ctx.beginPath();
-        }
+    function endPosition() {
+        painting = false;
+        ctx.beginPath();
+    }
 
-        function draw(e) {
-            if (!painting) return;
-            ctx.lineWidth = 8;
-            ctx.lineCap = "round";
-            ctx.lineJoin = "round";
-            ctx.strokeStyle = "#782434";
-            ctx.shadowColor = "#782434";
-            ctx.shadowBlur = 4;
+    function draw(e) {
+        if (!painting) return;
+        ctx.lineWidth = 8;
+        ctx.lineCap = "round";
+        ctx.lineJoin = "round";
+        ctx.strokeStyle = "#782434";
+        ctx.shadowColor = "#782434";
+        ctx.shadowBlur = 4;
 
+        ctx.lineTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+    }
 
-            ctx.lineTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
-            ctx.stroke();
-            ctx.beginPath();
-            ctx.moveTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
-        }
+    if (paintMode == false && !isDragging) {
+        paintMode = true;
+        console.log('paintmode on');
+        console.log('selected tool ' + toolname);
+
+        disableInteract();
 
         canvas.addEventListener("mousedown", startPosition);
         canvas.addEventListener("mouseup", endPosition);
         canvas.addEventListener("mousemove", draw);
-
     } else {
+        paintMode = false;
+        enableInteract();
+
+        painting = false;
+
+        console.log('paintmode off');
+
         canvas.removeEventListener("mousedown", startPosition);
         canvas.removeEventListener("mouseup", endPosition);
         canvas.removeEventListener("mousemove", draw);
 
-
-        console.log('paintmode false')
-        paintMode = false;
-
     }
 }
 
-
-
+enableInteract();
 // loads the stuff in case previous 'save' is detected. SUFFER.
 window.addEventListener('load', loadPositions);
