@@ -2,6 +2,8 @@
 <html lang="en">
 
 <head>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.3.1/p5.min.js"></script>
+
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Welcome Home.</title>
@@ -10,13 +12,16 @@
 
 <body>
 
+  <canvas id="canvas" width="1920" height="1080"></canvas>
   <div class="dark-overlay" id="overlay"></div>
 
   <div class="container">
 
-    <img src="img/sign.png" id="sign" class="draggable" style="top: 10px; left: 910px" />
+    <img src="img/sign.png" id="sign" class="draggable"
+      style="top: 10px; left: 910px; clip-path: polygon(16% 17%, 17% 100%, 0 100%, 1% 0%, 100% 0, 100% 17%);" />
 
-    <div id="gitarra" class='draggable' style="top: 20px; left: 530px">
+    <div id="gitarra" class='draggable'
+      style="top: 20px; left: 530px; clip-path: polygon(63% 57%, 60% 19%, 70% 16%, 66% 0%, 43% 0, 26% 15%, 41% 18%, 38% 56%, 7% 49%, 0 100%, 40% 100%, 100% 99%, 96% 59%);">
       <img src="img/gitarra.png" id="gitarra" />
       <div class="string" id="string1"
         style="top: 91px; left: 89px; width: 3px; height: 420px;  transform: rotate(1deg);"></div>
@@ -35,10 +40,11 @@
 
 
 
-    <img src="img/charlie.png" id="charlie" class="draggable" style="top: 20px; left: 0px" />
+    <img src="img/charlie.png" id="charlie" class="draggable"
+      style="top: 20px; left: 0px; clip-path: polygon(36% 100%, 45% 74%, 54% 72%, 55% 100%, 88% 99%, 100% 86%, 89% 69%, 100% 59%, 65% 39%, 100% 37%, 100% 0, 0 0, 0 30%, 30% 38%, 0 56%, 5% 68%, 34% 61%, 4% 76%, 7% 95%);" />
     <img src="img/paper.png" id="paper" class="draggable" style="top: 320px; left: 0px" />
 
-    <img src="img/brush.png" id="brush" class="draggable" style="top: 275px; left: 310px" />
+    <img src="img/brush.png" id="brush" onclick="paint();" class="draggable" style="top: 275px; left: 310px" />
     <img src="img/ruler.png" id="ruler" class="draggable" style="top: 20px; left: 350px" />
     <img src="img/cuaderno.png" id="cuaderno" class="draggable" style="top: 80px; left: 350px" />
     <img src="img/libro.png" id="libro" class="draggable" style="top: 350px; left: 350px" />
@@ -62,8 +68,9 @@
 
     <img src="img/pick.png" id="pick" class="draggable" style="top: 340px; left: 667px" />
 
-    <a href="https://github.com/LiteralHat" target="_blank">
-      <img src="img/window.png" id="window" class="draggable" style="top: 445px; left: 760px" /></a>
+    <a href="https://github.com/LiteralHat" target="_blank" id="window" class="draggable"
+      style="top: 445px; left: 760px">
+      <img src="img/window.png" /></a>
 
     <img src="img/lapiz.png" id="lapiz" class="draggable" style="top: 585px; left: 760px" />
     <img src="img/cuchara.png" id="cuchara" class="draggable" style="top: 615px; left: 730px" />
@@ -71,14 +78,15 @@
     <img src="img/paint.png" id="paint" class="draggable" style="top: 690px; left: 560px" />
     <img src="img/rato.png" id="rato" class="draggable" style="top: 630px; left: 530px" />
 
-    <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank"><img src="img/egg.png" id="egg"
-        target="_blank" class="draggable" style="top: 325px; left: 250px" /></a>
+    <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" id="egg" target="_blank" class="draggable"
+      style="top: 325px; left: 250px"><img src="img/egg.png" /></a>
 
 
 
   </div>
+
 </body>
+
 <script src="drag.js"></script>
-<script src="gimmick.js"></script>
 
 </html>
